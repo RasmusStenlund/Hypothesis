@@ -80,6 +80,19 @@ def update_experiment(experiment_id: int, experiment: ExperimentUpdate):
         session.commit()
         session.refresh(db_experiment)
         return db_experiment
+    
+@app.delete("/experiments{experiment_id}")
+def delete_experiment(experiment_id: int):
+    with Session(engine) as session:
+        experiment = session.get(Experiment, experiment_id)
+        if not experiment:
+            raise HTTPException(
+                status_code = 404,
+                detail = "Experiment not found"
+            )
+        session.delete(experiment)
+        session.commit()
+        return {"ok": True}
 
 
 @app.get("/experiments", response_model = list[ExperimentPublic])
