@@ -73,11 +73,77 @@ p, a, h1 {
     margin: 0px;
     display: flex;
     flex-direction: column;
+    width: clamp(300px, 55vw, 1000px);
+    justify-self: center;
 }
 
 #new-experiment-form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+}
+
+input[type = "text"] {
+    background-color: #cfd5df;
+    border: 1px solid rgb(193, 203, 215);
+    padding: 8px;
+    border-radius: 5px;
+}
+
+*:focus {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid #2a4672;
+    border-radius: 5px;
+}
+
+textarea {
+    width: 100%
+}
+
+
+.new-contributor-delete, .new-material-delete {
+    background-color: red;
+    color: #FFFFFF;
+    border: 1px solid #ab0000;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    border-radius: 3px;
+    
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#add-contributor, #add-material {
+    background-color: #8c9bb3;
+    border: 1px solid #8397b5;
+    color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.experiment-part {
+    background-color: #f2f5fa;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
 }
 
 textarea {

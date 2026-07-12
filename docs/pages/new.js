@@ -4,45 +4,53 @@ export function page() {
         <p>New experiment</p>
 
         <form id = "new-experiment-form">
-            <label>Title</label>
-            <input type = "text" id = "new-title">
+            <div class = "experiment-part">
+                <label>Title</label>
+                <input type = "text" id = "new-title">
 
-            <label>Date</label>
-            <input type = "date" id = "new-date">
-
-            <label>Contributors</label>
-            <div id = "contributor-list">
-                <div class = "contributor">
-                    <input type = "text" class = "new-contributor">
-                </div>
+                <label>Date</label>
+                <input type = "date" id = "new-date">
             </div>
-            <button id = "add-contributor">+ Add Contributor</button>
 
-            <label>Introduction</label>
-            <textarea id = "introduction"></textarea>
-
-            <label>Hypothesis</label>
-            <textarea id = "hypothesis"></textarea>
-
-            <label>Materials</label>
-            <div id = "material-list">
-                <div class = "material">
-                    <input type = "text" class = "new-material">
+            <div class = "experiment-part">
+                <label>Contributors</label>
+                <div id = "contributor-list">
+                    <div class = "contributor">
+                        <input type = "text" class = "new-contributor">
+                        <button class="new-contributor-delete hidden">−</button>
+                    </div>
                 </div>
+                <button id = "add-contributor">+ Add Contributor</button>
             </div>
-            <button id = "add-material">+ Add Material</button>
 
-            <label>Method</label>
-            <textarea id = "method"></textarea>
+            <div class = "experiment-part">
+                <label>Introduction</label>
+                <textarea id = "introduction"></textarea>
 
-            <label>Results</label>
-            <textarea id = "results"></textarea>
+                <label>Hypothesis</label>
+                <textarea id = "hypothesis"></textarea>
 
-            <label>Discussion</label>
-            <textarea id = "discussion"></textarea>
+                <label>Materials</label>
+                <div id = "material-list">
+                    <div class = "material">
+                        <input type = "text" class = "new-material">
+                        <button class="new-material-delete hidden">−</button>
+                    </div>
+                </div>
+                <button id = "add-material">+ Add Material</button>
 
-            <label>Conclusion</label>
-            <textarea id = "conclusion"></textarea>
+                <label>Method</label>
+                <textarea id = "method"></textarea>
+
+                <label>Results</label>
+                <textarea id = "results"></textarea>
+
+                <label>Discussion</label>
+                <textarea id = "discussion"></textarea>
+
+                <label>Conclusion</label>
+                <textarea id = "conclusion"></textarea>
+            </div>
 
             <button type = "submit">Submit</type>
         </form>
@@ -61,7 +69,7 @@ function add_input(parent, div_class, text_class, button_class) {
 
     const button = document.createElement("button")
     button.classList.add(button_class)
-    button.textContent = "X"
+    button.innerHTML = "&minus;";
     div.appendChild(button)
 
     parent.appendChild(div)
