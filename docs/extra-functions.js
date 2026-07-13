@@ -1,13 +1,18 @@
 const url = "http://127.0.0.1:8000"
 
 export async function call_api(dict, endpoint, call_method) {
-    const response = await fetch(`${url}${endpoint}`, {
+    const options = {
         method: call_method,
-        body: JSON.stringify(dict),
         headers: {
             "Content-Type": "application/json"
         }
-    })
+    }
+
+    if (call_method !== "GET") {
+        options.body = JSON.stringify(dict)
+    }
+    
+    const response = await fetch(`${url}${endpoint}`, options)
 
     const data = await response.json()
 
@@ -19,12 +24,12 @@ export async function call_api(dict, endpoint, call_method) {
 }
 
 export function show_message(message) {
-    const overlay = document.getElementById("#message-overlay")
+    const overlay = document.getElementById("message-overlay")
     overlay.querySelector(".message").textContent = message;
 
     overlay.classList.add("show")
 
     setTimeout(function () {
         overlay.classList.remove("show")
-     }, 5000)
+     }, 3000)
 }

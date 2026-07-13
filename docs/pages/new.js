@@ -171,7 +171,10 @@ export function setup() {
             conclusion: document.getElementById("conclusion").value.trim()
         }
 
-        data = await call_api(experiment, "/experiments", "POST");
-        show_message("test");
+        const data = await call_api(experiment, "/experiments", "POST");
+        if (data.code === 200) {
+            window.location.hash = '#/experiments'
+            show_message("Successfully created experiment!");
+        }
     })
 }

@@ -1,3 +1,4 @@
+
 body {
     font-family: Inter, Arial, sans-serif;
     display: flex;
@@ -22,9 +23,11 @@ p, a, h1, h2, h3, h4 {
     margin: 0px;
     padding: 0px;
     border-bottom: 1px solid #e5ebf4;
-    min-height: 50px;
+    min-height: 60px;
     padding-left: 5px;
     padding-right: 15px;
+    position: sticky;
+    top: 0;
 }
 
 .logo {
@@ -35,7 +38,7 @@ p, a, h1, h2, h3, h4 {
 .logo a {
     display: flex;
     align-items: center;
-    gap: 0px;
+    gap: 5px;
     text-decoration: none;
     line-height: 1;
 }
@@ -69,19 +72,25 @@ p, a, h1, h2, h3, h4 {
 }
 
 #message-overlay {
-    position: absolute;
-    top: 70px;
-    left: 50%;
+    position: fixed;
+    top: 60px;
+    align-self: center;
     opacity: 0;
+    transition: 0.25s;
 }
 
-#message-ovelay.show {
+#message-overlay.show {
     opacity: 1;
+    top: 70px;
 }
 
 #message-overlay .message {
-    background-color: green;
-    
+    size: fit-content;
+    padding: 10px;
+    background-color: #49b04e;
+    border: 1px solid rgb(193, 203, 215);
+    border-radius: 10px;
+    color: white;
 }
 
 #app {
@@ -216,3 +225,59 @@ button[type = "submit"] {
     color: white;
     border-radius: 5px;
 }
+
+/*Experiments*/
+#experiments-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
+    gap: 2rem;
+}
+
+.experiment-card {
+    width: 450px;
+    height: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    justify-self: center;
+    background-color: #FFFFFF;
+    border: 1px solid #ced6e0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.experiment-card .info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#no-experiments {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    background-color: #FFFFFF;
+    border: 1px solid #ced6e0;
+    border-radius: 10px;
+    width: fit-content;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+
+}
+
+#no-experiments.show {
+    opacity: 1;
+}
+
+#none-button {
+    background-color: #8c9bb3;
+    border: 1px solid #8397b5;
+    color: white;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+
