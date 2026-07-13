@@ -13,7 +13,10 @@ export function page() {
 
 import {call_api, show_message} from "../extra-functions.js"
 
-function make_experiment_card(title, date, contributors, hypothesis, parent) {
+function make_experiment_card(title, date, contributors, hypothesis, id, parent) {
+    const link = document.createElement("a")
+    link.href = `#/experiments/${id}`
+
     const card = document.createElement("div")
     card.classList.add("experiment-card")
 
@@ -41,7 +44,8 @@ function make_experiment_card(title, date, contributors, hypothesis, parent) {
     short_hypothesis.textContent = hypothesis
     card.appendChild(short_hypothesis)
 
-    parent.appendChild(card)
+    link.appendChild(card)
+    parent.appendChild(link)
 }
 
 export async function setup() {
@@ -49,7 +53,7 @@ export async function setup() {
     const experiments_list = document.getElementById("experiments-list")
 
     for (const experiment of response.data) {
-        make_experiment_card(experiment.title, experiment.date, experiment.contributors, experiment.hypothesis, experiments_list)
+        make_experiment_card(experiment.title, experiment.date, experiment.contributors, experiment.hypothesis, experiment.id, experiments_list)
     }
 
     const no_experiments = document.getElementById("no-experiments")
