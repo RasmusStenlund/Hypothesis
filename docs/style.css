@@ -118,13 +118,13 @@ p, a, h1, h2, h3, h4 {
     margin: 10px;
 }
 
-#new-experiment-form {
+#new-experiment-form, #experiment-page-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-input[type = "date"] {
+input[type = "date"], .experiment-date{
     width: 150px;
     height: 1.2rem;
     padding: 5px;
@@ -140,7 +140,7 @@ input[type = "text"], textarea, .experiment-text {
     border-radius: 5px;
 }
 
-.contributor .experiment-text {
+.experiment-text {
     width: 100%
 }
 
@@ -177,7 +177,7 @@ textarea, .textarea {
 }
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 #add-contributor, #add-material {
@@ -308,6 +308,12 @@ button[type = "submit"] {
     justify-self: center;
 }
 
+#experiment-page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 #experiment-date {
     font-size: 0.9rem;
 }
@@ -322,3 +328,56 @@ button[type = "submit"] {
     pointer-events: none;
 }
 
+#delete-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border: 1px solid #c0ccdb;
+    border-radius: 10px;
+    gap: 30px;
+    padding: 20px;
+}
+
+#delete-container.hidden {
+    display: none;
+}
+
+#delete-buttons {
+    display: flex;
+    gap: 20px;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+}
+
+#confirm-delete {
+    background-color: #d92727;
+    border: 1px solid #790e0e;
+    color: white;
+    border-radius: 5px;
+    line-height: 1;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+#cancel-delete {
+    background-color: #b7b7b7;
+    border: 1px solid #777777;
+    color: white;
+    border-radius: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 1.05rem;
+}
