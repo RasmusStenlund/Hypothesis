@@ -25,19 +25,19 @@ export function page() {
                             <button type = "button" class="remove-contributor opacity">−</button>
                         </div>
                     </div>
-                    <button type = "button" id = "add-contributor">+ Add Contributor</button>
+                    <button type = "button" id = "new-add-contributor">+ Add Contributor</button>
                 </div>
             </div>
 
             <div class = "experiment-part">
                 <div class = "component">
                     <h3>Introduction</h3>
-                    <textarea id = "introduction"></textarea>
+                    <textarea id = "new-introduction"></textarea>
                 </div>
 
                 <div class = "component">
                     <h3>Hypothesis</h3>
-                    <textarea id = "hypothesis" required></textarea>
+                    <textarea id = "new-hypothesis" required></textarea>
                 </div>
 
                 <div class = "component">
@@ -48,27 +48,27 @@ export function page() {
                             <button type = "button" class="remove-material opacity">−</button>
                         </div>
                     </div>
-                    <button type = "button" id = "add-material">+ Add Material</button>
+                    <button type = "button" id = "new-add-material">+ Add Material</button>
                 </div>
 
                 <div class = "component">
                     <h3>Method</h3>
-                    <textarea id = "method" required></textarea>
+                    <textarea id = "new-method" required></textarea>
                 </div>
 
                 <div class = "component">
                     <h3>Results</h3>
-                    <textarea id = "results"></textarea>
+                    <textarea id = "new-results"></textarea>
                 </div>
                 
                 <div class = "component">
                     <h3>Discussion</h3>
-                    <textarea id = "discussion"></textarea>
+                    <textarea id = "new-discussion"></textarea>
                 </div>
 
                 <div class = "component">
                     <h3>Conclusion</h3>
-                    <textarea id = "conclusion"></textarea>
+                    <textarea id = "new-conclusion"></textarea>
                 </div>
             </div>
 
@@ -80,30 +80,12 @@ export function page() {
     `
 }
 
-import {call_api, show_message} from "../extra-functions.js"
-
-function add_input(parent, div_class, text_class, button_class) {
-    const div = document.createElement("div")
-    div.classList.add(div_class)
-
-    const text = document.createElement("input")
-    text.type = "text"
-    text.classList.add(text_class)
-    div.appendChild(text)
-
-    const button = document.createElement("button")
-    button.classList.add(button_class)
-    button.type = "button"
-    button.innerHTML = "&minus;";
-    div.appendChild(button)
-
-    parent.appendChild(div)
-}
+import {call_api, show_message, add_input} from "../extra-functions.js"
 
 export function setup() {
 
     const contributor_list = document.getElementById("contributor-list")
-    const add_contributor = document.getElementById("add-contributor")
+    const add_contributor = document.getElementById("new-add-contributor")
 
     add_contributor.addEventListener("click", function () {
         add_input(contributor_list, "contributor", "new-contributor", "remove-contributor");
@@ -116,14 +98,14 @@ export function setup() {
     })
 
     const material_list = document.getElementById("material-list")
-    const add_material = document.getElementById("add-material")
+    const add_material = document.getElementById("new-add-material")
 
     add_material.addEventListener("click", function () {
-        add_input(material_list, "material", "new-material", "new-material-delete")
+        add_input(material_list, "material", "new-material", "remove-material")
     })
 
     material_list.addEventListener("click", function (event) {
-        if (event.target.classList.contains("new-material-delete")) {
+        if (event.target.classList.contains("remove-material")) {
             event.target.parentElement.remove()
         }
     })
@@ -154,8 +136,8 @@ export function setup() {
                 return value !== ""
             }),
 
-            introduction: document.getElementById("introduction").value.trim(),
-            hypothesis: document.getElementById("hypothesis").value.trim(),
+            introduction: document.getElementById("new-introduction").value.trim(),
+            hypothesis: document.getElementById("new-hypothesis").value.trim(),
 
             materials: Array.from(
                 document.querySelectorAll(".new-material")
@@ -165,10 +147,10 @@ export function setup() {
                 return value !== ""
             }),
 
-            method: document.getElementById("method").value.trim(),
-            results: document.getElementById("results").value.trim(),
-            discussion: document.getElementById("discussion").value.trim(),
-            conclusion: document.getElementById("conclusion").value.trim()
+            method: document.getElementById("new-method").value.trim(),
+            results: document.getElementById("new-results").value.trim(),
+            discussion: document.getElementById("new-discussion").value.trim(),
+            conclusion: document.getElementById("new-conclusion").value.trim()
         }
 
         const data = await call_api(experiment, "/experiments", "POST");
