@@ -143,7 +143,7 @@ input[type = "text"], textarea, .textarea, .text {
 textarea, .textarea {
     overflow: hidden;
     resize: none;
-    width: 60%;
+    width: 70%;
     min-height: 96px;
 }
 
@@ -202,7 +202,7 @@ textarea, .textarea {
     display: none;
 }
 
-#new-add-contributor, #new-add-material {
+#new-add-contributor, #new-add-material, #experiment-add-contributor, #experiment-add-material {
     background-color: #8c9bb3;
     border: 1px solid #8397b5;
     color: white;
@@ -367,7 +367,7 @@ button[type = "submit"] {
 
 #delete-buttons {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     height: fit-content;
     justify-content: center;
     align-items: center;
@@ -383,18 +383,64 @@ button[type = "submit"] {
     padding-bottom: 7px;
     padding-left: 25px;
     padding-right: 25px;
+    font-size: 1rem;
 }
 
 #cancel-delete {
-    background-color: #b7b7b7;
+    background-color: #979eaf;
     border: 1px solid #777777;
     color: white;
     border-radius: 5px;
     padding-top: 7px;
     padding-bottom: 7px;
-    padding-left: 30px;
-    padding-right: 30px;
-    font-size: 1.05rem;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 1rem;
+    line-height: 1
+}
+
+#cancel-edit {
+    background-color: #979eaf;
+    border: 1px solid #777777;
+    color: white;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#save-edit {
+    background-color: #5d87c5;
+    border: 1px solid #416497;
+    color: white;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#edit-experiment {
+    background-color: #849ec5;
+    border: 1px solid #58739d;
+    color: white;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#delete-experiment {
+    background-color: #c93f3f;
+    border: 1px solid #9a2e2e;
+    color: white;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .experiment-page form .hidden {

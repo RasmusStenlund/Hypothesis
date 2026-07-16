@@ -20,7 +20,7 @@ export function page() {
                 <div class = "component">
                     <h3>Date</h3>
                     <p class = "experiment-date" id = "experiment-date-text"></p>
-                    <input type = "text" id = "experiment-date-input">
+                    <input type = "date" id = "experiment-date-input">
                 </div>
             </div>
 
@@ -28,6 +28,7 @@ export function page() {
                 <div class = "component">
                     <h3>Contributors</h3>
                     <div id = "experiment-contributors-list"></div>
+                    <button type = "button" id = "experiment-add-contributor" class = "hidden">+ Add Contributor</button>
                 </div>
             </div>
 
@@ -47,6 +48,7 @@ export function page() {
                 <div class = "component">
                     <h3>Materials</h3>
                     <div id = "experiment-materials-list"></div>
+                    <button type = "button" id = "experiment-add-material">+ Add Material</button>
                 </div>
 
                 <div class = "component">
@@ -77,7 +79,7 @@ export function page() {
 
         <div id = "delete-container" class = "hidden">
             <h2 id = "delete-warning"></h2>
-            <p>This action cannot be undone.
+            <p>This action cannot be undone.</p>
 
             <div id = "delete-buttons">
                 <button id = "cancel-delete">Cancel</button>
@@ -129,29 +131,49 @@ function list_to_inputs(list, type) {
 }
 
 function hide_elements(type) {
-    const title_element = document.getElementById(`experiment-title-${type}`)
-    title_element.classList.add("hidden")
-    
-    const date_element = document.getElementById(`experiment-date-${type}`)
-    date_element.classList.add("hidden")
+    const element_names = [
+        "title",
+        "date",
+        "introduction",
+        "hypothesis",
+        "method",
+        "results",
+        "discussion",
+        "conclusion"
+    ]
 
-    const introduction_element = document.getElementById(`experiment-introduction-${type}`)
-    introduction_element.classList.add("hidden")
+    for (const element_name of element_names) {
+        const element = document.getElementById(`experiment-${element_name}-${type}`)
+        element.classList.add("hidden")
+    }
+}
 
-    const hypothesis_element = document.getElementById(`experiment-hypothesis-${type}`)
-    hypothesis_element.classList.add("hidden")
+function show_elements(type) {
+    const element_names = [
+        "title",
+        "date",
+        "introduction",
+        "hypothesis",
+        "method",
+        "results",
+        "discussion",
+        "conclusion"
+    ]
 
-    const method_element = document.getElementById(`experiment-method-${type}`)
-    method_element.classList.add("hidden")
+    for (const element_name of element_names) {
+        const element = document.getElementById(`experiment-${element_name}-${type}`)
+        element.classList.remove("hidden")
+    }
+}
 
-    const results_element = document.getElementById(`experiment-results-${type}`)
-    results_element.classList.add("hidden")
+function hide_add_buttons() {
+    document.getElementById("experiment-add-contributor").classList.add("hidden")
+    document.getElementById("experiment-add-material").classList.add("hidden")
+}
 
-    const discussion_element = document.getElementById(`experiment-discussion-${type}`)
-    discussion_element.classList.add("hidden")
-
-    const conclusion_element = document.getElementById(`experiment-conclusion-${type}`)
-    conclusion_element.classList.add("hidden")
+function show_add_buttons() {
+    document.getElementById("experiment-add-contributor").classList.remove("hidden")
+    document.getElementById("experiment-add-material").classList.remove("hidden")
 }
 
 async function load_experiment(id) {
@@ -197,7 +219,45 @@ async function load_experiment(id) {
     const materials_list = document.getElementById("experiment-materials-list")
     make_list("material", experiment.materials, materials_list)
 
-    
+    document.getElementById("experiment-title-input").value = experiment.title
+    document.getElementById("experiment-date-input").value = experiment.date
+    document.getElementById("experiment-introduction-input").value = experiment.introduction
+    document.getElementById("experiment-hypothesis-input").value = experiment.hypothesis
+    document.getElementById("experiment-method-input").value = experiment.method
+    document.getElementById("experiment-results-input").value = experiment.results
+    document.getElementById("experiment-discussion-input").value = experiment.discussion
+    document.getElementById("experiment-conclusion-input").value = experiment.conclusion
+}
+
+function inputs_to_dict() {
+    return {
+        title: document.getElementById("experiment-title-input").value.trim(),
+        date: document.getElementById("experiment-date-input").value.trim(),
+
+        contributors: Array.from(
+            document.querySelectorAll(".edit-contributor")
+        ).map(function(input) {
+            return input.value.trim()
+        }).filter(function(value) {
+            return value !== ""
+        }),
+
+        introduction: document.getElementById("experiment-introduction-input").value.trim(),
+        hypothesis: document.getElementById("experiment-hypothesis-input").value.trim(),
+
+        materials: Array.from(
+            document.querySelectorAll(".edit-material")
+        ).map(function(input) {
+            return input.value.trim()
+        }).filter(function(value) {
+            return value !== ""
+        }),
+
+        method: document.getElementById("experiment-method-input").value.trim(),
+        results: document.getElementById("experiment-results-input").value.trim(),
+        discussion: document.getElementById("experiment-discussion-input").value.trim(),
+        conclusion: document.getElementById("experiment-conclusion-input").value.trim()
+    }
 }
 
 export async function setup(params) {
@@ -209,7 +269,26 @@ export async function setup(params) {
     const regular_buttons = document.getElementById("experiment-page-actions")
 
     const contributors_list = document.getElementById("experiment-contributors-list")
+    const add_contributor = document.getElementById("experiment-add-contributor")
+    add_contributor.addEventListener("click", function () {
+        add_input(contributors_list, "contributor", "edit-contributor", "remove-contributor")
+    })
+    contributors_list.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-contributor")) {
+            event.target.parentElement.remove()
+        }
+    })
+
     const materials_list = document.getElementById("experiment-materials-list")
+    const add_material = document.getElementById("experiment-add-material")
+    add_material.addEventListener("click", function () {
+        add_input(materials_list, "material", "edit-material", "remove-material")
+    })
+    materials_list.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-material")) {
+            event.target.parentElement.remove()
+        }
+    })
 
     const save_edit = document.getElementById("save-edit")
     const cancel_edit = document.getElementById("cancel-edit")
@@ -219,14 +298,44 @@ export async function setup(params) {
         regular_buttons.classList.add("hidden")
         list_to_inputs(contributors_list, "contributor")
         list_to_inputs(materials_list, "material")
+        hide_elements("text")
+        show_elements("input")
+        show_add_buttons()
     })
 
-    cancel_edit.addEventListener("click", function () {
+    cancel_edit.addEventListener("click", async function () {
         hide_elements("input")
-        load_experiment(params.id)
+        show_elements("text")
+        hide_add_buttons()
+
+        contributors_list.innerHTML = ""
+        materials_list.innerHTML = ""
+
+        await load_experiment(params.id)
+
+        edit_buttons.classList.add("hidden")
+        regular_buttons.classList.remove("hidden")
     })
 
-    save_edit.addEventListener("click", function () {
+    save_edit.addEventListener("click", async function () {
+        const dict = inputs_to_dict();
+
+        const response = await call_api(dict, `/experiments/${params.id}`, "PATCH")
+
+        if (response.code === 200) {
+            hide_elements("input")
+            show_elements("text")
+            hide_add_buttons()
+
+            contributors_list.innerHTML = ""
+            materials_list.innerHTML = ""
+
+            await load_experiment(params.id)
+
+            edit_buttons.classList.add("hidden")
+            regular_buttons.classList.remove("hidden")
+            show_message("Sucessfully edited experiment!")
+        }
     })
 
     const delete_button = document.getElementById("delete-experiment")
@@ -234,9 +343,10 @@ export async function setup(params) {
     const cancel_delete = document.getElementById("cancel-delete")
     const confirm_delete = document.getElementById("confirm-delete")
     const warning = document.getElementById("delete-warning")
+    const title = document.getElementById("experiment-title-text").textContent
 
     delete_button.addEventListener("click", function () {
-        warning.textContent = `Are you sure you want to delete "${experiment.title}"?`
+        warning.textContent = `Are you sure you want to delete "${title}"?`
         delete_container.classList.remove("hidden")
     })
 
