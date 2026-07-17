@@ -322,7 +322,7 @@ export async function setup(params) {
 
         const response = await call_api(dict, `/experiments/${params.id}`, "PATCH")
 
-        if (response.code === 200) {
+        if (response.ok) {
             hide_elements("input")
             show_elements("text")
             hide_add_buttons()
@@ -358,7 +358,7 @@ export async function setup(params) {
 
     confirm_delete.addEventListener("click", async function () {
         const delete_response = await call_api(null, `/experiments/${params.id}`, "DELETE")
-        if (delete_response.code === 200) {
+        if (delete_response.ok) {
             window.location.hash = "#/experiments"
             show_message("Experiment successfully deleted!", true)
         } else {

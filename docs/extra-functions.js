@@ -25,9 +25,41 @@ export async function call_api(dict, endpoint, call_method) {
     } catch(error) {
         return {
             code: 0,
-            error: "Failed to conenct to API."
+            error: "Failed to connect to API."
         }
     }
+}
+
+export async function call_api_token(username, password) {
+    const form_data = new URLSearchParams()
+
+    form_data.append("username", username)
+    form_data.append("password", password)
+
+    try {
+        const response = await fetch(`${url}/token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: form_data
+        })
+
+        const data = await response.json()
+
+        return {
+            ok: response.ok,
+            code: response.code,
+            data: data
+        }
+    } catch(error) {
+        return {
+            code: 0,
+            error: "Failed to connect to API."
+        }
+    }
+
+
 }
 
 export function show_message(message, status) {

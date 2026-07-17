@@ -70,7 +70,7 @@
 
     export async function setup() {
         const response = await call_api(null, "/experiments", "GET")
-        if (response.code === 200) {
+        if (response.ok) {
             let experiments = response.data
             const experiments_list = document.getElementById("experiments-list")
 

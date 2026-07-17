@@ -154,7 +154,7 @@ export function setup() {
         }
 
         const data = await call_api(experiment, "/experiments", "POST");
-        if (data.code === 200) {
+        if (data.ok) {
             window.location.hash = '#/experiments'
             show_message("Successfully created experiment!", true);
         } else {
