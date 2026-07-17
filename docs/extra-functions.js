@@ -1,3 +1,5 @@
+import {sign_out} from "./auth.js"
+
 const url = "https://hypothesis.nordicpine.hackclub.app"
 
 export async function call_api(dict, endpoint, call_method) {
@@ -8,12 +10,29 @@ export async function call_api(dict, endpoint, call_method) {
         }
     }
 
+    const token = localStorage.getItem("token")
+
+    if (token) {
+        options.headers["Authorization"] = `Bearer ${token}`
+    }
+
     if (call_method !== "GET") {
         options.body = JSON.stringify(dict)
     }
     
     try {
         const response = await fetch(`${url}${endpoint}`, options)
+
+        if (response.status === 401) {
+            sign_out()
+            show_message("Your session has expired. Please sign in again to continue", false)
+
+            return {
+                ok: false,
+                code: 401,
+                error: "Session expired"
+            }
+        }
 
         const data = await response.json()
 
@@ -49,11 +68,12 @@ export async function call_api_token(username, password) {
 
         return {
             ok: response.ok,
-            code: response.code,
+            code: response.status,
             data: data
         }
     } catch(error) {
         return {
+            ok: false,
             code: 0,
             error: "Failed to connect to API."
         }

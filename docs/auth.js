@@ -6,9 +6,9 @@ export function get_token() {
     return localStorage.getItem("token")
 }
 
-export function log_out() {
+export function sign_out() {
     localStorage.removeItem("token")
-    window.location.hash = "#/account/login"
+    window.location.hash = "#/account/signin"
 }
 
 export function is_logged_in() {

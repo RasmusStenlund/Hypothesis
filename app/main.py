@@ -41,8 +41,10 @@ class UserCreate(SQLModel):
     password: str = Field(min_length = 8)
 
 class UserPublic(SQLModel):
+    id: int
     username: str
     display_name: str
+    email: str
 
 class ExperimentBase(SQLModel):
     title: str

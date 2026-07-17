@@ -77,7 +77,7 @@ export function setup() {
 
                 save_token(token)
 
-                show_message("Account successfully created!")
+                show_message("Account successfully created!", true)
                 window.location.hash = "#/"
             } else {
                 show_message("Account created, but login failed.", false)
