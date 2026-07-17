@@ -1,4 +1,4 @@
-const url = "http://127.0.0.1:8000"
+const url = "https://hypothesis.nordicpine.hackclub.app"
 
 export async function call_api(dict, endpoint, call_method) {
     const options = {
@@ -65,4 +65,21 @@ export function add_input(parent, div_class, text_class, button_class) {
     div.appendChild(button)
 
     parent.appendChild(div)
+}
+
+import {is_logged_in} from "./auth.js"
+
+export function update_links() {
+    const public_links = document.getElementById("public-links")
+    const private_links = document.getElementById("private-links")
+
+    if (is_logged_in()) {
+        public_links.classList.add("hidden")
+        private_links.classList.remove("hidden")
+        
+    } 
+    else {
+        private_links.classList.add("hidden")
+        public_links.classList.remove("hidden") 
+    }
 }

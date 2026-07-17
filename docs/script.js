@@ -1,16 +1,31 @@
+import * as login from "./pages/login.js"
+import * as sign_up from "./pages/signup.js"
+
 import * as home from "./pages/home.js"
 import * as experiments from "./pages/experiments.js"
 import * as new_experiment from "./pages/new.js"
 import * as experiment from "./pages/experiment.js"
+import * as account from "./pages/account.js"
 
- 
-const routes = {
+import {is_logged_in} from "./auth.js"
+import {update_links} from "./extra-functions.js"
+
+const public_routes = {
+    '#/account/login': login,
+    '#/account/signup': sign_up
+}
+
+
+const private_routes = {
     '#/': home,
     '#/experiments': experiments,
-    '#/experiments/new': new_experiment
+    '#/experiments/new': new_experiment,
+    '#/account': account
 }
 
 function router() {
+    update_links()
+
     const current_hash = window.location.hash || '#/';
 
     const link_list = document.querySelectorAll(".links a")
@@ -22,9 +37,19 @@ function router() {
         }
     }
 
-    let content_function = routes[current_hash]
+    let content_function = {...public_routes, ...private_routes}[current_hash]
     let app_container = document.getElementById('app')
     let params = {}
+
+    if (private_routes[current_hash] && !(is_logged_in())) {
+        window.location.hash = '#/account/login'
+        return
+    }
+
+    if (current_hash.startsWith('#/experiments/') && !(is_logged_in())) {
+        window.location.hash = '#/account/login'
+        return
+    }
 
     if (current_hash.startsWith('#/experiments/') && current_hash !== '#/experiments/new') {
         params.id = current_hash.split('/')[2]
