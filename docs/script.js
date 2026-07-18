@@ -11,6 +11,7 @@ import {is_logged_in} from "./auth.js"
 import {update_links} from "./extra-functions.js"
 
 const public_routes = {
+    '#/': home,
     '#/account/signin': sign_in,
     '#/account/signup': sign_up
 }
@@ -41,8 +42,8 @@ function router() {
     let app_container = document.getElementById('app')
     let params = {}
 
-    if (private_routes[current_hash] && !(is_logged_in())) {
-        window.location.hash = '#/account/signin'
+    if (private_routes[current_hash] && !(is_logged_in()) && current_hash !== '#/') {
+        window.location.hash = '#/'
         return
     }
 
@@ -51,7 +52,7 @@ function router() {
     }
 
     if (current_hash.startsWith('#/experiments/') && !(is_logged_in())) {
-        window.location.hash = '#/account/signin'
+        window.location.hash = '#/'
         return
     }
 

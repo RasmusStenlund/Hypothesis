@@ -48,7 +48,7 @@ export function page() {
                 <div class = "component">
                     <h3>Materials</h3>
                     <div id = "experiment-materials-list"></div>
-                    <button type = "button" id = "experiment-add-material">+ Add Material</button>
+                    <button type = "button" id = "experiment-add-material" class = "hidden">+ Add Material</button>
                 </div>
 
                 <div class = "component">

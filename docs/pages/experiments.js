@@ -79,11 +79,15 @@
             })
             show_experiments(experiments)
 
+            const filter_experiments = document.getElementById("filter-experiments")
+
             const no_experiments = document.getElementById("no-experiments")
             if (experiments_list.innerHTML.trim() === "") {
                 no_experiments.classList.add("show")
+                filter_experiments.classList.add("hidden")
             } else {
                 no_experiments.classList.remove("show")
+                filter_experiments.classList.remove("hidden")
             }
 
             const none_button = document.getElementById("none-button")
