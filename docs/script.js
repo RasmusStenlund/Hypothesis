@@ -27,7 +27,7 @@ const private_routes = {
     '#/account': account
 }
 
-function router() {
+export function router() {
     update_links()
 
     const current_hash = window.location.hash || '#/';

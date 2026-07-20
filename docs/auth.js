@@ -6,9 +6,12 @@ export function get_token() {
     return localStorage.getItem("token")
 }
 
+import {router} from "./script.js"
+
 export function sign_out() {
     localStorage.removeItem("token")
     window.location.hash = "#/"
+    router()
 }
 
 export function is_logged_in() {
